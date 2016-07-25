@@ -2,7 +2,7 @@
 /**
  * "Unified" diff renderer.
  *
- * This class renders the diff in classic "unified diff" format.
+ * This class renders the diff in frontend "unified diff" format.
  *
  * $Horde: framework/Text_Diff/Diff/Renderer/unified.php,v 1.3.10.7 2009/01/06 15:23:42 jan Exp $
  *

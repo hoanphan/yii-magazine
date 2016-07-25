@@ -1,30 +1,25 @@
 <?php
 
 /**
- * The followings are the available columns in table 'tbl_user':
- * @property integer $id
+ * This is the model class for table "user".
+ *
+ * The followings are the available columns in table 'user':
+ * @property integer $user_id
  * @property string $username
  * @property string $password
  * @property string $email
- * @property string $profile
+ * @property string $fullname
+ * @property string $phone
+ * @property integer $status
  */
 class User extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return static the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{user}}';
+		return 'user';
 	}
 
 	/**
@@ -35,9 +30,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
-			array('profile', 'safe'),
+			array('username, password, email, fullname, phone', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
+			array('username, password, email, fullname, phone', 'length', 'max'=>255),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('user_id, username, password, email, fullname, phone, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +47,11 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'posts' => array(self::HAS_MANY, 'Post', 'author_id'),
+		    'post'=>array(
+		        self::HAS_MANY,
+                'Post',
+                'user_id'
+            )
 		);
 	}
 
@@ -59,31 +61,55 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'Id',
-			'username' => 'Username',
-			'password' => 'Password',
+			'user_id' => 'Số thứ tự',
+			'username' => 'Tài khoản',
+			'password' => 'Mật khẩu',
 			'email' => 'Email',
-			'profile' => 'Profile',
+			'fullname' => 'Họ và tên',
+			'phone' => 'Điện thoại',
+			'status' => 'Trạng thái',
 		);
 	}
 
 	/**
-	 * Checks if the given password is correct.
-	 * @param string the password to be validated
-	 * @return boolean whether the password is valid
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
 	 */
-	public function validatePassword($password)
+	public function search()
 	{
-		return CPasswordHelper::verifyPassword($password,$this->password);
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('username',$this->username,true);
+		$criteria->compare('password',$this->password,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('fullname',$this->fullname,true);
+		$criteria->compare('phone',$this->phone,true);
+		$criteria->compare('status',$this->status);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
 	}
 
 	/**
-	 * Generates the password hash.
-	 * @param string password
-	 * @return string hash
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return User the static model class
 	 */
-	public function hashPassword($password)
+	public static function model($className=__CLASS__)
 	{
-		return CPasswordHelper::hashPassword($password);
+		return parent::model($className);
 	}
 }

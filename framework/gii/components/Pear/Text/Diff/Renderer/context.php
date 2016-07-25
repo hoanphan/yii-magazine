@@ -2,7 +2,7 @@
 /**
  * "Context" diff renderer.
  *
- * This class renders the diff in classic "context diff" format.
+ * This class renders the diff in frontend "context diff" format.
  *
  * $Horde: framework/Text_Diff/Diff/Renderer/context.php,v 1.3.2.4 2009/01/06 15:23:42 jan Exp $
  *

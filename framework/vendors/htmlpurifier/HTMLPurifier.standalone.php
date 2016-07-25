@@ -8076,7 +8076,7 @@ class HTMLPurifier_PropertyListIterator extends FilterIterator
 
 
 /**
- * A simple array-backed queue, based off of the classic Okasaki
+ * A simple array-backed queue, based off of the frontend Okasaki
  * persistent amortized queue.  The basic idea is to maintain two
  * stacks: an input stack and an output stack.  When the output
  * stack runs out, reverse the input stack and use it as the output

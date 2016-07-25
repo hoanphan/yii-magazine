@@ -8,7 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Yii 1 Demo',
-
+    'theme'=>'frontend',
 	// preloading 'log' component
 	'preload'=>array('log'),
 
@@ -19,7 +19,11 @@ return array(
 	),
 
 	'defaultController'=>'post',
-
+    'modules'=>array(
+        'gii'=>array(
+            'class'=>'system.gii.GiiModule',
+            'password'=>'1234',)
+    ),
 	// application components
 	'components'=>array(
 		'user'=>array(

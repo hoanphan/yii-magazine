@@ -2,7 +2,6 @@
 
 class SiteController extends Controller
 {
-	public $layout='column1';
 
 	/**
 	 * Declares class-based actions.
@@ -23,6 +22,11 @@ class SiteController extends Controller
 		);
 	}
 
+    public function actionIndex()
+    {
+        $content="hello world";
+        $this->render('index',array('content'=>$content));
+    }
 	/**
 	 * This is the action to handle external exceptions.
 	 */
