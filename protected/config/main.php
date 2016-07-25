@@ -22,7 +22,8 @@ return array(
     'modules'=>array(
         'gii'=>array(
             'class'=>'system.gii.GiiModule',
-            'password'=>'1234',)
+            'password'=>'1234',),
+        'admin'
     ),
 	// application components
 	'components'=>array(

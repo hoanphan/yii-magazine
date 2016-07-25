@@ -6,7 +6,10 @@
  * Date: 7/25/2016
  * Time: 3:55 PM
  */
-class LeftSideBar
+class LeftSideBar extends CWidget
 {
-
+    public function run()
+    {
+        $this->render('leftSideBar');
+    }
 }
